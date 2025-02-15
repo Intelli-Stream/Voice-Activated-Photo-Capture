@@ -1,40 +1,80 @@
-# Voice-Activated Photo Capture
+# 🎤 Voice-Activated Photo Capture 📸
 
-This repository contains the source code for a Voice-Activated Photo Capture application built using Flask and Python.
+This project is a **voice-activated camera application** built using **Streamlit**, **OpenCV**, and **SpeechRecognition**. It listens for the voice command **"capture"**, captures an image using your webcam, and displays the image on a web interface.
 
-## Features
+## 🚀 Features
+- 🎙️ **Voice-Activated Command**: Say **"capture"** to take a photo.
+- 📷 **Live Image Capture**: Captures images using your webcam.
+- 🔊 **Sound Feedback**: Plays a click sound when an image is taken.
+- 🖼️ **Default Placeholder Image**: Displays a default image before capturing.
+- 🎛️ **Responsive UI**: Well-aligned buttons and images using Streamlit.
 
-- **Voice Command Recognition**: Capture photos using voice commands.
-- **Real-Time Camera Access**: Activate the camera through the application interface.
-- **Photo Storage**: Automatically save captured photos to a designated folder.
-- **User-Friendly Interface**: Simple and responsive interface for easy access.
+## 📁 Folder Structure
+```
+VOICE-ACTIVATED-PHOTO-CAPTURE/
+│── static/
+│   └── captured_photo.jpg  # Saved captured image
+│── app.py                  # Main application file
+│── temp_audio.wav          # Click sound file
+│── requirements.txt        # Dependencies
+│── README.md               # Project documentation
+```
 
-## Getting Started
+## 🛠️ Installation & Setup
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/your-username/voice-activated-photo-capture.git
+cd voice-activated-photo-capture
+```
 
-To run the Voice-Activated Photo Capture application locally, follow these steps:
+### 2️⃣ Create a Virtual Environment (Optional but Recommended)
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
 
-1. Clone this repository to your local machine.
-2. Install Python and required dependencies (e.g., Flask, SpeechRecognition, OpenCV).
-3. Navigate to the project directory and run the Flask application.
-4. Access the application in your web browser.
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
 
-## Instructions to Run
+### 3️⃣ Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-- Install Flask and other dependencies by running:
-  ```bash
-  pip install flask SpeechRecognition opencv-python
-  ```
-- Save the `app.py` and `templates` folder (containing HTML files) in your project folder.
-- Open a terminal, navigate to your project folder, and run:
-  ```bash
-  python app.py
-  ```
-- Open your web browser and go to `http://127.0.0.1:5000/` to view and interact with the Voice-Activated Photo Capture app.
+### 4️⃣ Run the Application
+```bash
+streamlit run app.py
+```
 
-## Contributing
+## 🌍 Deployment on Streamlit Cloud
+1. **Push Code to GitHub**
+   - Create a GitHub repository.
+   - Upload all files, including `requirements.txt` and `app.py`.
 
-Contributions are welcome! If you have ideas or improvements, feel free to open an issue or submit a pull request.
+2. **Deploy on Streamlit Cloud**
+   - Go to [Streamlit Cloud](https://share.streamlit.io).
+   - Click **"New App"** → Connect GitHub → Select your repo.
+   - Set `app.py` as the entry point.
+   - Click **Deploy**.
 
-## License
+3. **Access Your App**
+   - Once deployed, you’ll get a URL like:
+     ```
+     https://your-app-name.streamlit.app
+     ```
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## 📝 Notes
+- Ensure your **microphone and webcam** are enabled.
+- If the **click sound doesn’t play**, check if `temp_audio.wav` is in the project folder.
+- If **speech recognition fails**, ensure you're connected to the internet (it uses Google Speech API).
+
+## 📌 Future Improvements
+- 🎥 Live camera preview.
+- 💾 Image storage and history.
+- 🌍 Multi-language support for voice commands.
+
+---
+Made with ❤️ by [Your Name]
+
