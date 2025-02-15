@@ -12,12 +12,13 @@ st.set_page_config(page_title="Voice-Activated Photo Capture", layout="wide")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_PATH = os.path.join(BASE_DIR, "static", "captured_photo.jpg")
 DEFAULT_IMAGE_URL = "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"
-CLICK_SOUND_PATH = "temp_fixed.wav"
+CLICK_SOUND_PATH = "capture_audio.wav"
 
 # Function to play capture sound
 def play_click_sound():
     if os.path.exists(CLICK_SOUND_PATH):
         try:
+            pygame.mixer.quit()  # Reset pygame mixer
             pygame.mixer.init()
             pygame.mixer.music.load(CLICK_SOUND_PATH)
             pygame.mixer.music.play()
@@ -25,6 +26,8 @@ def play_click_sound():
                 continue
         except pygame.error as e:
             st.error(f"Error playing sound: {e}")
+    else:
+        st.error("⚠️ Sound file not found. Check the file path.")
 
 # Function to listen for "capture" command using pre-recorded audio
 def listen_for_command():
