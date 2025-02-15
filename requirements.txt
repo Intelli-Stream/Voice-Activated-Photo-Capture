@@ -1,6 +1,7 @@
 streamlit
-opencv-python-headless
+opencv-python
 numpy
+SpeechRecognition
+pyaudio
 pygame
-speechrecognition
 ffmpeg-python
