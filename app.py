@@ -4,6 +4,7 @@ import numpy as np
 import speech_recognition as sr
 import os
 import pygame
+import time
 
 # Set page config
 st.set_page_config(page_title="Voice-Activated Photo Capture", layout="wide")
@@ -29,19 +30,15 @@ def play_click_sound():
     else:
         st.error("⚠️ Sound file not found. Check the file path.")
 
-# Function to listen for "capture" command using pre-recorded audio
+# Function to listen for "capture" command
 def listen_for_command():
     r = sr.Recognizer()
     try:
-        # Use a pre-recorded sample for testing in cloud environments
-        audio_path = "capture_audio.wav"  # Upload a sample "capture" audio file
-        if not os.path.exists(audio_path):
-            st.error("❌ No pre-recorded command found. Upload a sample 'capture' command.")
-            return None
+        with sr.Microphone() as source:
+            st.write("🎤 Listening for 'capture'...")
+            r.adjust_for_ambient_noise(source)
+            audio = r.listen(source)
 
-        with sr.AudioFile(audio_path) as source:
-            audio = r.record(source)  # Read from the audio file
-        
         command = r.recognize_google(audio).lower()
         st.write(f"✅ Recognized command: {command}")
         return command
@@ -60,13 +57,14 @@ def capture_image():
     try:
         command = listen_for_command()
         if command and "capture" in command:
-            cam = cv2.VideoCapture(0)
+            cam = cv2.VideoCapture(0)  # Try 0, 1, or 2 if multiple cameras exist
             if not cam.isOpened():
-                st.error("❌ Error: Could not open the camera.")
+                st.error("❌ Error: Could not open the camera. Make sure no other app is using it.")
                 return
 
-            # Allow camera to adjust
-            for _ in range(10):
+            time.sleep(2)  # Allow camera to warm up
+            
+            for _ in range(10):  
                 ret, frame = cam.read()
             
             ret, frame = cam.read()
@@ -75,10 +73,10 @@ def capture_image():
                 cv2.imwrite(IMAGE_PATH, frame)
                 cam.release()
                 st.session_state.image_captured = True  # Update session state
-                st.rerun()  # ✅ Updated from experimental_rerun()
+                st.rerun()
                 st.success("📸 Photo Captured Successfully!")
             else:
-                st.error("❌ Error: Could not capture image.")
+                st.error("❌ Error: Could not capture image. Try again.")
 
             cam.release()
             cv2.destroyAllWindows()
