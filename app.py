@@ -34,7 +34,7 @@ def listen_for_command():
     r = sr.Recognizer()
     try:
         # Use a pre-recorded sample for testing in cloud environments
-        audio_path = "sample_command.wav"  # Upload a sample "capture" audio file
+        audio_path = "capture_audio.wav"  # Upload a sample "capture" audio file
         if not os.path.exists(audio_path):
             st.error("❌ No pre-recorded command found. Upload a sample 'capture' command.")
             return None
