@@ -4,7 +4,7 @@ import numpy as np
 import speech_recognition as sr
 import os
 import pygame
-
+import ffmpeg
 # Set page config
 st.set_page_config(page_title="Voice-Activated Photo Capture", layout="wide")
 
@@ -32,8 +32,8 @@ def listen_for_command():
     try:
         with sr.Microphone() as source:
             st.write("🎤 Listening for 'capture'...")
-            r.adjust_for_ambient_noise(source, duration=0.5)
-            audio = r.listen(source, timeout=5, phrase_time_limit=3)
+            r.adjust_for_ambient_noise(source)
+            audio = r.listen(source)
         
         command = r.recognize_google(audio).lower()
         st.write(f"✅ Recognized command: {command}")
