@@ -4,15 +4,15 @@ import numpy as np
 import speech_recognition as sr
 import os
 import pygame
-import ffmpeg
+
 # Set page config
 st.set_page_config(page_title="Voice-Activated Photo Capture", layout="wide")
 
 # Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_PATH = os.path.join(BASE_DIR, "static", "captured_photo.jpg")
-DEFAULT_IMAGE_URL = "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"  # Replace with your actual default image URL
-CLICK_SOUND_PATH = "temp_fixed.wav"  # Ensure it's a 16-bit PCM WAV file
+DEFAULT_IMAGE_URL = "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"
+CLICK_SOUND_PATH = "temp_fixed.wav"
 
 # Function to play capture sound
 def play_click_sound():
@@ -26,14 +26,18 @@ def play_click_sound():
         except pygame.error as e:
             st.error(f"Error playing sound: {e}")
 
-# Function to listen for "capture" command
+# Function to listen for "capture" command using pre-recorded audio
 def listen_for_command():
     r = sr.Recognizer()
     try:
-        with sr.Microphone() as source:
-            st.write("🎤 Listening for 'capture'...")
-            r.adjust_for_ambient_noise(source)
-            audio = r.listen(source)
+        # Use a pre-recorded sample for testing in cloud environments
+        audio_path = "sample_command.wav"  # Upload a sample "capture" audio file
+        if not os.path.exists(audio_path):
+            st.error("❌ No pre-recorded command found. Upload a sample 'capture' command.")
+            return None
+
+        with sr.AudioFile(audio_path) as source:
+            audio = r.record(source)  # Read from the audio file
         
         command = r.recognize_google(audio).lower()
         st.write(f"✅ Recognized command: {command}")
@@ -85,7 +89,7 @@ st.markdown(
     """
     <style>
         .block-container {
-            padding-top: 10px !important;  /* Reduce top space */
+            padding-top: 10px !important;
         }
         .centered {
             display: flex;
